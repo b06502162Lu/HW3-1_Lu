@@ -68,8 +68,9 @@ parser.add_argument('--shuffle', default=0, type=int,
                     help='reshuffle the data at every epoch')
 parser.add_argument('--batch_size', default=128, type=int,
                     help='Batch size')
-parser.add_argument('--num_workers', default=4, type=int,
+parser.add_argument('--num_workers', default=8, type=int,
                     help='Number of workers to generate minibatch')
+'''test'''
 # optimizer
 parser.add_argument('--optimizer', default='adam', type=str,
                     choices=['sgd', 'adam'],
@@ -111,8 +112,9 @@ def main(args):
     tr_loader = AudioDataLoader(tr_dataset, batch_size=1,
                                 shuffle=args.shuffle,
                                 num_workers=args.num_workers)
+    '''try it later'''
     cv_loader = AudioDataLoader(cv_dataset, batch_size=1,
-                                num_workers=0)
+                                num_workers=8)
     data = {'tr_loader': tr_loader, 'cv_loader': cv_loader}
     # model
     model = ConvTasNet(args.N, args.L, args.B, args.H, args.P, args.X, args.R,
