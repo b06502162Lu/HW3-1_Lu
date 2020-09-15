@@ -37,7 +37,7 @@ mask_nonlinear='relu'
 C=2
 # Training config
 use_cuda=1
-id=0
+id=0,1,2,3
 epochs=40
 half_lr=1
 early_stop=1
