@@ -68,7 +68,7 @@ parser.add_argument('--shuffle', default=0, type=int,
                     help='reshuffle the data at every epoch')
 parser.add_argument('--batch_size', default=128, type=int,
                     help='Batch size')
-parser.add_argument('--num_workers', default=8, type=int,
+parser.add_argument('--num_workers', default=16, type=int,
                     help='Number of workers to generate minibatch')
 '''test'''
 # optimizer
@@ -93,10 +93,11 @@ parser.add_argument('--model_path', default='final.pth.tar',
 # logging
 parser.add_argument('--print_freq', default=10, type=int,
                     help='Frequency of printing training information')
-parser.add_argument('--visdom', dest='visdom', type=int, default=0,
+parser.add_argument('--visdom', dest='visdom', type=int, default=1,
                     help='Turn on visdom graphing')
-parser.add_argument('--visdom_epoch', dest='visdom_epoch', type=int, default=0,
+parser.add_argument('--visdom_epoch', dest='visdom_epoch', type=int, default=1,
                     help='Turn on visdom graphing each epoch')
+#turn on visdom graphing
 parser.add_argument('--visdom_id', default='TasNet training',
                     help='Identifier for visdom run')
 
@@ -111,10 +112,10 @@ def main(args):
                               segment=-1, cv_maxlen=args.cv_maxlen)  # -1 -> use full audio
     tr_loader = AudioDataLoader(tr_dataset, batch_size=1,
                                 shuffle=args.shuffle,
-                                num_workers=args.num_workers)
+                                num_workers=16)
     '''try it later'''
     cv_loader = AudioDataLoader(cv_dataset, batch_size=1,
-                                num_workers=8)
+                                num_workers=16)
     data = {'tr_loader': tr_loader, 'cv_loader': cv_loader}
     # model
     model = ConvTasNet(args.N, args.L, args.B, args.H, args.P, args.X, args.R,
