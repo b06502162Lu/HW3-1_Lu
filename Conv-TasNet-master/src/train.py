@@ -55,7 +55,7 @@ parser.add_argument('--use_cuda', type=int, default=1,
                     help='Whether use GPU')
 parser.add_argument('--epochs', default=30, type=int,
                     help='Number of maximum epochs')
-parser.add_argument('--half_lr', dest='half_lr', default=0, type=int,
+parser.add_argument('--half_lr', dest='half_lr', default=1, type=int,
                     help='Halving learning rate when get small improvement')
 parser.add_argument('--early_stop', dest='early_stop', default=0, type=int,
                     help='Early stop training when no improvement for 10 epochs')
