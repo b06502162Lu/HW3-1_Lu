@@ -55,7 +55,7 @@ parser.add_argument('--use_cuda', type=int, default=1,
                     help='Whether use GPU')
 parser.add_argument('--epochs', default=30, type=int,
                     help='Number of maximum epochs')
-parser.add_argument('--half_lr', dest='half_lr', default=1, type=int,
+parser.add_argument('--half_lr', dest='half_lr', default=0, type=int,
                     help='Halving learning rate when get small improvement')
 parser.add_argument('--early_stop', dest='early_stop', default=0, type=int,
                     help='Early stop training when no improvement for 10 epochs')
@@ -68,9 +68,8 @@ parser.add_argument('--shuffle', default=0, type=int,
                     help='reshuffle the data at every epoch')
 parser.add_argument('--batch_size', default=128, type=int,
                     help='Batch size')
-parser.add_argument('--num_workers', default=16, type=int,
+parser.add_argument('--num_workers', default=4, type=int,
                     help='Number of workers to generate minibatch')
-'''test'''
 # optimizer
 parser.add_argument('--optimizer', default='adam', type=str,
                     choices=['sgd', 'adam'],
@@ -93,11 +92,10 @@ parser.add_argument('--model_path', default='final.pth.tar',
 # logging
 parser.add_argument('--print_freq', default=10, type=int,
                     help='Frequency of printing training information')
-parser.add_argument('--visdom', dest='visdom', type=int, default=1,
+parser.add_argument('--visdom', dest='visdom', type=int, default=0,
                     help='Turn on visdom graphing')
-parser.add_argument('--visdom_epoch', dest='visdom_epoch', type=int, default=1,
+parser.add_argument('--visdom_epoch', dest='visdom_epoch', type=int, default=0,
                     help='Turn on visdom graphing each epoch')
-#turn on visdom graphing
 parser.add_argument('--visdom_id', default='TasNet training',
                     help='Identifier for visdom run')
 
@@ -112,10 +110,9 @@ def main(args):
                               segment=-1, cv_maxlen=args.cv_maxlen)  # -1 -> use full audio
     tr_loader = AudioDataLoader(tr_dataset, batch_size=1,
                                 shuffle=args.shuffle,
-                                num_workers=16)
-    '''try it later'''
+                                num_workers=4)
     cv_loader = AudioDataLoader(cv_dataset, batch_size=1,
-                                num_workers=16)
+                                num_workers=4,pin_memory = True)
     data = {'tr_loader': tr_loader, 'cv_loader': cv_loader}
     # model
     model = ConvTasNet(args.N, args.L, args.B, args.H, args.P, args.X, args.R,

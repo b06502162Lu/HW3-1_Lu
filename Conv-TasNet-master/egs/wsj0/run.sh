@@ -37,7 +37,7 @@ mask_nonlinear='relu'
 C=2
 # Training config
 use_cuda=1
-id=0,1,2,3
+id=0
 epochs=40
 half_lr=1
 early_stop=1
@@ -46,7 +46,7 @@ pit=1
 # minibatch
 shuffle=1
 batch_size=30
-num_workers=16
+num_workers=8
 # optimizer
 optimizer=adam
 lr=1e-3
